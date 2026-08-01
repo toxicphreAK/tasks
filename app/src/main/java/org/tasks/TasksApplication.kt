@@ -52,6 +52,7 @@ import org.tasks.sync.SyncAdapters
 import org.tasks.sync.SyncSource
 import org.tasks.themes.ThemeBase
 import org.tasks.time.DateTimeUtils2.currentTimeMillis
+import org.tasks.logging.CrashDump
 import timber.log.Timber
 import java.util.Locale
 import java.util.concurrent.TimeUnit
@@ -85,6 +86,7 @@ class TasksApplication : Application(), Configuration.Provider {
         val defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
             Timber.e(throwable, "Uncaught exception in thread $thread")
+            CrashDump.write(this, thread, throwable)
             defaultExceptionHandler?.uncaughtException(thread, throwable) ?: throw throwable
         }
         upgrade()
