@@ -82,6 +82,11 @@ android {
     @Suppress("LocalVariableName")
     buildTypes {
         debug {
+            // Installs alongside a release build of Tasks instead of colliding with it. Every
+            // provider authority and custom permission in the manifest is already keyed off
+            // ${applicationId}, so they re-namespace with it.
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
             configure<CrashlyticsExtension> {
                 mappingFileUploadEnabled = false
             }
