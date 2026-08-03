@@ -82,11 +82,24 @@ android {
     @Suppress("LocalVariableName")
     buildTypes {
         debug {
-            // Installs alongside a release build of Tasks instead of colliding with it. Every
-            // provider authority and custom permission in the manifest is already keyed off
-            // ${applicationId}, so they re-namespace with it.
-            applicationIdSuffix = ".debug"
-            versionNameSuffix = "-debug"
+            // Installs alongside a release build of Tasks instead of colliding with it, unless
+            // built with -PparallelInstall=false.
+            //
+            // DAVx5 cannot see a suffixed build at all: its ProviderName table hardcodes package
+            // "org.tasks", the authority "org.tasks.opentasks" and the "org.tasks.permission.*"
+            // names, and it calls getPackageInfo() on that package before touching the provider.
+            // Build with -PparallelInstall=false to test anything sync related.
+            val parallelInstall = (project.findProperty("parallelInstall") as String?) != "false"
+            if (parallelInstall) {
+                applicationIdSuffix = ".debug"
+                // The bundled dmfs provider reads its own authority from this string, while the
+                // manifest registers it under ${applicationId}. Leaving the default here points it
+                // at an authority nothing owns, and it kills the process from its own background
+                // thread a few seconds after launch.
+                resValue("string", "opentasks_authority", "org.tasks.debug.opentasks")
+                resValue("string", "app_package", "org.tasks.debug")
+            }
+            versionNameSuffix = if (parallelInstall) "-debug" else "-mybuild"
             configure<CrashlyticsExtension> {
                 mappingFileUploadEnabled = false
             }

@@ -79,16 +79,19 @@ class TasksApplication : Application(), Configuration.Provider {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        // First callback the Application gets. Content providers are created after this, and Hilt
+        // injects during super.onCreate(), so installing the handler any later leaves the two most
+        // likely causes of a crash on launch unreported.
+        CrashDump.install(this)
+        CrashDump.logStartup(this)
+    }
+
     override fun onCreate() {
         super.onCreate()
         syncComposeResourceLocale()
         buildSetup.setup()
-        val defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
-        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-            Timber.e(throwable, "Uncaught exception in thread $thread")
-            CrashDump.write(this, thread, throwable)
-            defaultExceptionHandler?.uncaughtException(thread, throwable) ?: throw throwable
-        }
         upgrade()
         runBlocking {
             tasksPreferences.set(TasksPreferences.syncOngoing, false)
