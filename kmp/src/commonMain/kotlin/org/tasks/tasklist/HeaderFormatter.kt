@@ -1,20 +1,10 @@
 package org.tasks.tasklist
 
 import com.todoroo.astrid.core.SortHelper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.getString
-import org.tasks.data.dao.CaldavDao
+import org.tasks.filters.CaldavListCache
 import org.tasks.kmp.org.tasks.time.DateStyle
-import org.tasks.kmp.org.tasks.time.getRelativeDay
-import org.tasks.time.DateTimeUtils2.currentTimeMillis
-import org.tasks.time.startOfDay
-import java.util.concurrent.ConcurrentHashMap
-import kotlin.concurrent.Volatile
+import org.tasks.kmp.org.tasks.time.DateFormatter
 import tasks.kmp.generated.resources.Res
 import tasks.kmp.generated.resources.completed
 import tasks.kmp.generated.resources.filter_high_priority
@@ -31,71 +21,23 @@ import tasks.kmp.generated.resources.sort_modified_group
 import tasks.kmp.generated.resources.sort_start_group
 
 class HeaderFormatter(
-    private val caldavDao: CaldavDao,
-    scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO),
+    private val caldavLists: CaldavListCache,
 ) {
-    @Volatile
-    private var cacheDay = Long.MIN_VALUE
-    private val headerCache = ConcurrentHashMap<String, String>()
-
-    @Volatile
-    private var listNames: Map<Long, String?> = emptyMap()
-
-    init {
-        caldavDao
-            .subscribeToCalendars()
-            .onEach { calendars ->
-                listNames = calendars.associate { it.id to it.name }
-                // A rename changes header text, so anything already resolved is stale.
-                headerCache.clear()
-            }
-            .launchIn(scope)
-    }
-
-    /**
-     * Called from view binding on the main thread, and resolving a header means a string resource
-     * load. Headers repeat constantly while scrolling, so results are memoized. Relative dates
-     * ("today", "tomorrow") are only valid for the current day, so the cache is dropped when the
-     * day rolls over, and again whenever a list is renamed.
-     */
-    fun headerStringBlocking(
-        value: Long,
-        groupMode: Int,
-        alwaysDisplayFullDate: Boolean = false,
-        style: DateStyle = DateStyle.FULL,
-        compact: Boolean = false,
-    ): String {
-        val today = currentTimeMillis().startOfDay()
-        if (today != cacheDay) {
-            cacheDay = today
-            headerCache.clear()
-        }
-        val key = "$value|$groupMode|$alwaysDisplayFullDate|$style|$compact"
-        headerCache[key]?.let { return it }
-        return runBlocking {
-            headerString(value, groupMode, alwaysDisplayFullDate, style, compact)
-        }.also { headerCache[key] = it }
-    }
-
     suspend fun headerString(
         value: Long,
         groupMode: Int,
+        dateFormatter: DateFormatter,
         alwaysDisplayFullDate: Boolean = false,
         style: DateStyle = DateStyle.FULL,
         compact: Boolean = false,
-    ): String =
+    ): String? =
         when {
             value == SectionedDataSource.HEADER_COMPLETED ->
                 getString(Res.string.completed)
             groupMode == SortHelper.SORT_IMPORTANCE ->
                 getString(priorityToString(value))
             groupMode == SortHelper.SORT_LIST ->
-                // Falls back to a query only before the first emission from subscribeToCalendars.
-                (if (listNames.containsKey(value)) {
-                    listNames[value]
-                } else {
-                    caldavDao.getCalendarById(value)?.name
-                }) ?: "list: $value"
+                caldavLists.getById(value)?.title?.takeIf { it.isNotBlank() }
             value == SectionedDataSource.HEADER_OVERDUE ->
                 getString(Res.string.filter_overdue)
             value == 0L -> getString(
@@ -106,7 +48,7 @@ class HeaderFormatter(
                 }
             )
             else -> {
-                val dateString = getRelativeDay(
+                val dateString = dateFormatter.relativeDay(
                     value,
                     style,
                     alwaysDisplayFullDate = alwaysDisplayFullDate,

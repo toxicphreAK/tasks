@@ -106,11 +106,6 @@
     <string name="rmd_NoA_done">Виконано</string>
     <string name="rmd_NoA_snooze">Відкласти</string>
     <string name="snooze_all">Відкласти все</string>
-    <string name="rmd_EPr_quiet_hours_start_title">Тихий час починається</string>
-    <string name="rmd_EPr_quiet_hours_end_title">Тихий час закінчується</string>
-    <string name="rmd_EPr_rmd_time_title">Час нагадування</string>
-    <string name="persistent_notifications">Постійні сповіщення</string>
-    <string name="persistent_notifications_description">Постійні сповіщення не можна прибрати</string>
     <string name="rmd_EPr_defaultRemind_title">Випадкові нагадування</string>
     <string name="default_random_reminder_disabled">Вимкнено</string>
     <string name="default_random_reminder_hourly">Щогодинно</string>
@@ -159,8 +154,6 @@
     <string name="TEA_timer_comment_spent">Часу витрачено:</string>
     <string name="voice_create_prompt">Горовіть для створення завдання</string>
     <string name="EPr_voiceInputEnabled_title">Голосове введення</string>
-    <string name="EPr_voiceRemindersEnabled_title">Голосові нагадування</string>
-    <string name="EPr_voiceRemindersEnabled_desc_enabled">Tasks повинен вимовляти назву завдань під час нагадувань</string>
     <string name="voice_command_added_task">Додане завдання</string>
     <plurals name="Ntasks">
         <item quantity="one">%d завдання</item>
@@ -174,7 +167,6 @@
     <string name="widget_show_header">Показати заголовок</string>
     <string name="widget_show_settings">Показати налаштування</string>
     <string name="notifications">Сповіщення</string>
-    <string name="quiet_hours">Тихі години</string>
     <string name="attachment_directory">Тека з прикріпленими файлами</string>
     <string name="backup_directory">Тека з резервними копіями</string>
     <string name="google_drive_backup">Резервне копіювання до Google Drive</string>
@@ -184,20 +176,16 @@
     <string name="row_spacing">Відстань між рядками</string>
     <string name="customize_edit_screen">Налаштувати вікно редагування</string>
     <string name="translations">Допомогти перекласти</string>
-    <string name="quiet_hours_summary">Без нагадувань під час тихих годин</string>
     <string name="add_location">Додати місце</string>
     <string name="remove">Вилучити</string>
     <string name="geofence_radius">Радіус геозони</string>
     <string name="location_radius_meters">%s м</string>
     <string name="tags">Мітки</string>
     <string name="filters">Фільтри</string>
-    <string name="date_shortcut_hour">На годину</string>
     <string name="date_shortcut_morning">Зранку</string>
     <string name="date_shortcut_afternoon">Вдень</string>
     <string name="date_shortcut_evening">Ввечері</string>
     <string name="date_shortcut_night">Вночі</string>
-    <string name="date_shortcut_tomorrow_morning">Завтра зранку</string>
-    <string name="date_shortcut_tomorrow_afternoon">Завтра вдень</string>
     <string name="date_shortcut_must_come_before">%1$s має бути до %2$s</string>
     <string name="date_shortcut_must_come_after">%1$s має бути після %2$s</string>
     <string name="discard_changes">Скасувати зміни\?</string>
@@ -240,8 +228,6 @@
     <string name="copy_selected_tasks">Копіювати вибрані завдання?</string>
     <string name="user">Користувач</string>
     <string name="password">Пароль</string>
-    <string name="notification_disable_battery_optimizations_description">Оптимізація енергоспоживання може спричинити затримку сповіщень</string>
-    <string name="bundle_notifications">Колекція сповіщень</string>
     <string name="badges">Значки</string>
     <string name="list">Список</string>
     <string name="repeats_from">Повторювати з</string>
@@ -249,7 +235,6 @@
     <string name="dont_add_to_calendar">Не додавати до календаря</string>
     <string name="default_calendar">Типовий календар</string>
     <string name="badges_description">Показувати кількість завдань на піктограмі запуску Tasks. Не всі лаунчери підтримують такі значки.</string>
-    <string name="bundle_notifications_summary">Групувати кілька сповіщень в одне</string>
     <string name="tasker_create_task">Створити завдання</string>
     <string name="tasker_list_notification">Список повідомлень</string>
     <string name="help">Довідка</string>
@@ -291,8 +276,6 @@
     <string name="preferences_advanced">Розширені</string>
     <string name="show_advanced_settings">Показати розширені налаштування</string>
     <string name="theme_system_default">За системними налаштуваннями</string>
-    <string name="wearable_notifications_summary">Показувати повідомлення на натільних пристроях</string>
-    <string name="wearable_notifications">Повідомлення на натільні пристрої</string>
     <string name="documentation">Документація</string>
     <string name="etesync_selection_description">Захищена наскрізним шифруванням синхронізація</string>
     <string name="caldav_selection_description">Синхронізація на основі стандартів відкритого інтернету</string>
@@ -321,11 +304,6 @@
     <string name="upgrade_blurb_2">Я витратив тисячі годин, працюючи над Tasks, і я публікую весь код онлайн безоплатно. Щоб підтримати мою роботу, деякі функції потребують підписки</string>
     <string name="upgrade_blurb_1">Привіт! Моє ім\'я Алекс. Я - незалежний розробник Tasks</string>
     <string name="color_wheel">Палітра</string>
-    <string name="more_notification_settings_summary">Мелодія, вібрація та інше</string>
-    <string name="more_settings">Більше налаштувань</string>
-    <string name="disable_battery_optimizations">Вимкнути оптимізацію енергоспоживання</string>
-    <string name="notification_troubleshooting_summary">Натисніть тут, якщо маєте проблеми з повідомленнями</string>
-    <string name="troubleshooting">Розв\'язання проблем</string>
     <string name="sort_created">За часом створення</string>
     <string name="copied_to_clipboard">%s скопійовано в буфер обміну</string>
     <string name="app_passwords_more_info">Синхронізуйте свої завдання та календарі зі сторонніми настільними та мобільними застосунками. Натисніть тут, щоб дізнатися більше</string>
@@ -410,8 +388,6 @@
     <string name="default_tags">Типові мітки</string>
     <string name="no_app_found">Немає застосунків, які можуть опрацювати цей запит</string>
     <string name="filter_criteria_unstarted">Непочаті</string>
-    <string name="date_shortcut_tomorrow_night">Завтра вночі</string>
-    <string name="date_shortcut_tomorrow_evening">Завтра ввечері</string>
     <string name="header_spacing">Інтервал</string>
     <string name="widget_show_dividers">Показати розділювачі</string>
     <string name="widget_show_menu">Показати меню</string>
@@ -446,7 +422,6 @@
     <string name="markdown_description">Увімкнути Markdown у заголовку та описі</string>
     <string name="markdown">Markdown</string>
     <string name="now">Зараз</string>
-    <string name="completion_sound">Відтворювати звук завершення</string>
     <string name="completed">Виконано</string>
     <string name="snackbar_task_completed">Завдання виконано</string>
     <string name="snackbar_tasks_completed">%d завдань виконано</string>
@@ -466,16 +441,7 @@
     <string name="donate_maybe_later">Можливо пізніше</string>
     <string name="customize_drawer">Змінити панель</string>
     <string name="customize_drawer_summary">Перетягніть елементи меню, щоб перевпорядкувати їх</string>
-    <string name="swipe_to_snooze_title">Посуньте, щоб відкласти</string>
-    <string name="swipe_to_snooze_description">Час відкладання</string>
-    <string name="swipe_to_snooze_time_description">Очищене сповіщення буде відкладено і відтворено %s</string>
-    <string name="swipe_to_snooze_time_immediately">негайно</string>
-    <string name="swipe_to_snooze_time_15_minutes">за 15 хвилин</string>
-    <string name="swipe_to_snooze_time_30_minutes">за 30 хвилин</string>
-    <string name="swipe_to_snooze_time_1_hour">за 1 годину</string>
-    <string name="swipe_to_snooze_time_24_hours">за 24 години</string>
     <string name="show_edit_screen_without_unlock_summary">Дозволяє використовувати плитку швидких налаштувань без розблокування пристрою</string>
-    <string name="quiet_hours_in_effect">Активовано тихі години</string>
     <string name="delete_comment">коментар</string>
     <string name="comment">Коментар</string>
     <string name="yesterday">Учора</string>
@@ -499,5 +465,4 @@
     <string name="multiline_title_off">Натисніть готово, щоб зберегти завдання</string>
     <string name="delete_tasks_warning">%s буде видалено. Дію неможливо скасувати!</string>
     <string name="widget_view_more_tasks">Переглянути інші завдання</string>
-    <string name="pick_a_date_and_time">Обрати дату й час</string>
 </resources>

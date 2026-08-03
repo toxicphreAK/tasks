@@ -10,6 +10,7 @@ import dagger.hilt.android.qualifiers.ActivityContext
 import org.tasks.R
 import org.tasks.databinding.TaskAdapterRowBinding
 import org.tasks.dialogs.Linkify
+import org.tasks.kmp.org.tasks.time.DateFormatter
 import org.tasks.markdown.MarkdownProvider
 import org.tasks.preferences.Preferences
 import org.tasks.preferences.ResourceResolver
@@ -25,7 +26,6 @@ class ViewHolderFactory @Inject constructor(
     private val chipProvider: ChipProvider,
     private val checkBoxProvider: CheckBoxProvider,
     private val linkify: Linkify,
-    private val headerFormatter: HeaderFormatter,
     private val theme: Theme,
 ) {
     private val textColorOverdue: Int = context.getColor(R.color.overdue)
@@ -38,10 +38,11 @@ class ViewHolderFactory @Inject constructor(
     private val markdown =
         MarkdownProvider(context, preferences).markdown(R.string.p_linkify_task_list)
 
+    lateinit var dateFormatter: DateFormatter
+
     fun newHeaderViewHolder(parent: ViewGroup?, callback: (Long) -> Unit) =
             HeaderViewHolder(
                     context,
-                    headerFormatter,
                     LayoutInflater.from(context).inflate(R.layout.task_adapter_header, parent, false),
                     callback,
             )
@@ -64,5 +65,6 @@ class ViewHolderFactory @Inject constructor(
                 linkify,
                 markdown,
                 theme = theme,
+                dateFormatter = dateFormatter,
             )
 }

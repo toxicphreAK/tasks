@@ -156,10 +156,6 @@ open class OpenTaskDao(
         private fun List<String>.placeholders() = joinToString(",") { "?" }
 
         private fun taskByUidArgs(listId: Long, uid: String) =
-                // Bound rather than interpolated: a UID is server supplied, and CalDAV places no
-                // restriction on quotes. A single apostrophe used to turn the selection into
-                // invalid SQL, which the provider answers with "no such task" - the task is then
-                // re-imported on every sync and local edits to it are never sent back.
                 arrayOf(listId.toString(), uid)
 
         private fun toChangeStamp(syncVersion: String): String =
